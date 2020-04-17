@@ -1,0 +1,8 @@
+v 3
+d erepost: module to repost the estimation results
+d 
+d Author: Ben Jann, University of Bern, ben.jann@soz.unibe.ch
+d
+d Distribution-Date: 20200417
+f erepost.hlp
+f erepost.ado
