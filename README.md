@@ -4,7 +4,7 @@ Stata module to repost the estimation results
 `erepost` changes the b or V matrix of the current estimation results or changes
 the declared estimation sample. `erepost` is similar to official `ereturn repost`.
 However, `erepost` is allowed after estimation commands that do not post their
-results using `ereturn post` (e.g. `logit`) and `erepost` can be used outside of
+results using `ereturn post` (e.g. `regress`) and `erepost` can be used outside of
 eclass programs.
 
 To install the `erepost` package from the SSC Archive, type
@@ -22,6 +22,10 @@ Installation from GitHub:
 ---
 
 Main changes:
+
+    26jun2025:
+    - options se, nov, nob, and drop() added
+    - e(sample) is no longer created if the current results do not contain e(sample)
 
     17apr2020
     - installation files added to GitHub distribution

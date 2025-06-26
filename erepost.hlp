@@ -1,5 +1,5 @@
 {smcl}
-{* 15jun2015}{...}
+{* 26jun2025}{...}
 {cmd:help erepost}
 {hline}
 
@@ -13,6 +13,7 @@
 {p 8 16 2}{cmd:erepost} [{cmd:b =} {it:b}] [{cmd:V =} {it:V}] [{cmd:,}
  {cmd:cmd(}{it:string}{cmd:)} 
  {cmdab:ren:ame}
+ {cmd:se} {cmd:nov} {cmd:nob} {cmd:drop(}{it:namelist}{cmd:)}
  [{ul:{cmd:no}}]{cmdab:e:sample:}[{cmd:(}{it:varname}{cmd:)}]
  {it:ereturn_post_opts}
  ]
@@ -25,22 +26,23 @@ where {it:b} is a 1 x p coefficient vector
 {title:Description}
 
 {p 4 4 2}
-{cmd:erepost} changes the {cmd:b} or {cmd:V} matrix  of the current estimation results 
+{cmd:erepost} changes the {cmd:e(b)} or {cmd:e(V)} matrix of the current estimation results 
 or changes the declared estimation sample. {cmd:erepost} is similar to
 {helpb ereturn repost}. However, {cmd:erepost} is allowed
 after estimation commands that do not post their results 
-using {cmd:ereturn post} (e.g. {cmd:logit}) and {cmd:erepost} 
+using {cmd:ereturn post} (e.g. {cmd:regress}) and {cmd:erepost} 
 can be used outside of {cmd:eclass} programs (see help {helpb program}).
 
 {p 4 4 2}
-Technical note: After applying {cmd:erepost} the original command (or 
-{cmd:estimates replay}) may not be able to replay the output.
+Technical notes: After applying {cmd:erepost} the original command (or 
+{cmd:estimates replay}) may not be able to replay the output. Furthermore,
+{cmd:erepost} does not preserve hidden results.
 
 
 {title:Options}
 
 {p 4 8 2}
-{cmd:cmd(}{it:string}{cmd:)} sets the {cmd:e(cmd)} macro.
+{cmd:cmd(}{it:string}{cmd:)} (re)sets the {cmd:e(cmd)} macro.
 
 {p 4 8 2}
 {cmd:rename} causes the names from the coefficient vector to be used
@@ -48,10 +50,34 @@ as the labels for both the coefficient vector and the covariance matrix
 in case of name conflicts.
 
 {p 4 8 2}
-{cmd:esample(}{it:varname}{cmd:)} gives the name of the 0/1 variable 
-indicating the observations involved in the estimation. The variable is 
-removed from the data but is available for use as {hi:e(sample)}. Specify {cmd:noesample}
-if you want to remove {cmd:e(sample)} from the estimation results.
+{cmd:se} causes vector {cmd:e(se)} to be added to the results, containing the
+square roots of the diagonal elements of the variance matrix.
+
+{p 4 8 2}
+{cmd:nov} omits {cmd:e(V)} from the reposted results. {cmd:nov} has no effect if
+{it:V} is provided.
+
+{p 4 8 2}
+{cmd:nob} omits {cmd:e(b)} from the reposted results. {cmd:nob} has no effect if
+{it:b} is provided. {cmd:nob} implies {cmd:nov}.
+
+{p 4 8 2}
+{cmd:drop(}{it:namelist}{cmd:)} omits the specified macros, scalars, or matrices
+from the reposted results, where {it:namelist} is a space-separated list of the
+names of the elements to be omitted. The specified names may contain
+{cmd:*} and {cmd:?} wildcards. Note that {cmd:drop()} cannot be used to remove
+the coefficient vector {cmd:e(b)} or the variance matrix {cmd:e(V)}, and that
+macro {cmd:e(properties)} will be re-created automatically.
+
+{p 4 8 2}
+{cmd:esample(}{it:varname}{cmd:)} provides the name of the 0/1 variable
+indicating the observations involved in the estimation. The variable will be
+removed from the data but will be available for use as {hi:e(sample)}.
+
+{p 8 8 2}
+If option {cmd:esample()} is omitted, the existing {cmd:e(sample)} will be
+preserved. Specify {cmd:noesample} if you want to remove {cmd:e(sample)} from
+the estimation results.
 
 {p 4 8 2}
 {it:ereturn_post_opts} are any other options allowed with {cmd:ereturn post}
@@ -60,7 +86,8 @@ if you want to remove {cmd:e(sample)} from the estimation results.
 
 {title:Examples}
 
-{p 4 4 2}Say, you are estimating a regression model that contains all interactions between the
+{p 4 4 2}
+Say, you are estimating a regression model that contains all interactions between the
 regressors and a binary variable and you want to display the main effects and the 
 interaction effects in two columns side by side. One approach is to modify the names 
 in {cmd:e(b)} and {cmd:e(V)} so 
@@ -110,7 +137,7 @@ the model using {cmd:estout} or {cmd:esttab} with the {cmd:unstack} option. Exam
 
 {title:Author}
 
-{p 4 4 2}Ben Jann, University of Bern, jann@soz.unibe.ch
+{p 4 4 2}Ben Jann, University of Bern, ben.jann@unibe.ch
 
 {p 4 4 2}Thanks for citing this software as follows:
 
