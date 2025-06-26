@@ -1,6 +1,7 @@
 {smcl}
 {* 26jun2025}{...}
-{cmd:help erepost}
+{cmd:help erepost}{...}
+{right:{browse "http://github.com/benjann/erepost/"}}
 {hline}
 
 {title:Title}
